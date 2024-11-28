@@ -20,6 +20,7 @@
     border: none;
     border-radius: 25px;
     background-color: bisque;
+    padding: 10px 0;
     color: black;
     width: 100%;
     display: flex;

@@ -4,9 +4,13 @@ import Widget from './components/Widget.vue';
 
 <template>
   <div class="root">
-    <h1>
-      This is my nice DnD Dashboard hooray!
-    </h1>
+    <div class="pageHeader">
+      <img src="/src/assets/DnD-Logo.png" class="icon">
+      <h1>
+        DnD Utilities
+      </h1>
+    </div>
+
 
     <Widget>
       <template #header>
@@ -39,6 +43,17 @@ import Widget from './components/Widget.vue';
 </template>
 
 <style scoped>
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.icon {
+  width: 20%;
+}
+
 h1 {
   margin-top: 0;
 }
