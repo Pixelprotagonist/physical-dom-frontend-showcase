@@ -7,24 +7,43 @@ import Widget from './components/Widget.vue';
     <h1>
       This is my nice DnD Dashboard hooray!
     </h1>
+
     <Widget>
-      Some fun will be here soon!
+      <template #header>
+        <h2>Widget #1</h2>
+      </template>
+      <template #body>
+        Some fun will be here soon!
+      </template> 
     </Widget>
+
     <Widget>
-      Some more fun will be here soon!
+      <template #header>
+        <h3>Widget #2</h3>
+      </template>
+      <template #body>
+        Some more fun will be here soon!
+      </template> 
     </Widget>
+
     <Widget>
-      Even fun will be here soon!
+      <template #header>
+        Widget #3
+      </template>
+      <template #body>
+        Even more fun will be here soon!
+      </template> 
     </Widget>
+
   </div>
 </template>
 
 <style scoped>
-h1{
+h1 {
   margin-top: 0;
 }
 
-.root{
+.root {
   height: 100%;
   display: flex;
   flex-direction: column;
