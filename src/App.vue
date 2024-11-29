@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 
 import Sidebar from './components/Sidebar.vue';
 import Widget from './components/Widget.vue';
@@ -9,41 +9,47 @@ const sidebarHidden = ref(false);
 const toggleSidebar = () => {
   sidebarHidden.value = !sidebarHidden.value;
 }
+
+const widgets = reactive([
+  {name: 'character', active: true, displayName: "Character"},
+  {name: 'dice', active: true, displayName: "Dice Tray"},
+  {name: 'enemies', active: true, displayName: "Enemies"},
+  ])
 </script>
 
 <template>
   <div class="root">
+    <button class="sidebarButton" @click="toggleSidebar">Sidebar</button>
     <div class="pageHeader">
       <img src="/src/assets/DnD-Logo.png" class="icon">
       <h1>
         DnD Utilities
       </h1>
-      <button @click="toggleSidebar">Sidebar</button>
     </div>
 
-    <Sidebar :sidebarHidden="sidebarHidden" @closeSidebar="() => {console.log('clacky'); toggleSidebar()}"/>
+    <Sidebar :sidebarHidden="sidebarHidden" @closeSidebar="toggleSidebar" :widgets="widgets" />
 
-    <Widget>
+    <Widget v-if="widgets[0].active">
       <template #header>
-        <h2>Widget #1</h2>
+        <h2>{{widgets[0].displayName}}</h2>
       </template>
       <template #body>
         Some fun will be here soon!
       </template> 
     </Widget>
 
-    <Widget>
+    <Widget v-if="widgets[1].active">
       <template #header>
-        <h3>Widget #2</h3>
+        <h3>{{widgets[1].displayName}}</h3>
       </template>
       <template #body>
         Some more fun will be here soon!
       </template> 
     </Widget>
 
-    <Widget>
+    <Widget v-if="widgets[2].active">
       <template #header>
-        Widget #3
+        {{widgets[2].displayName}}
       </template>
       <template #body>
         Even more fun will be here soon!
@@ -54,6 +60,12 @@ const toggleSidebar = () => {
 </template>
 
 <style scoped>
+.sidebarButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
 .pageHeader {
   display: flex;
   flex-direction: column;
