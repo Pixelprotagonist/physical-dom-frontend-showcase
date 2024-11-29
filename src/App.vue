@@ -1,5 +1,14 @@
 <script setup>
+import { ref } from 'vue';
+
+import Sidebar from './components/Sidebar.vue';
 import Widget from './components/Widget.vue';
+
+const sidebarHidden = ref(false);
+
+const toggleSidebar = () => {
+  sidebarHidden.value = !sidebarHidden.value;
+}
 </script>
 
 <template>
@@ -9,8 +18,10 @@ import Widget from './components/Widget.vue';
       <h1>
         DnD Utilities
       </h1>
+      <button @click="toggleSidebar">Sidebar</button>
     </div>
 
+    <Sidebar :sidebarHidden="sidebarHidden" @closeSidebar="() => {console.log('clacky'); toggleSidebar()}"/>
 
     <Widget>
       <template #header>
