@@ -1,10 +1,18 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 import Sidebar from './components/Sidebar.vue';
 import Widget from './components/Widget.vue';
 
+const LEVEL = 3;
+const BASE_HP = 10;
+const HIT_DIE = 8;
+const BASE_AC = 10;
+
 const sidebarHidden = ref(false);
+const statsLocked = ref(false);
+const chosenWeapon = ref('');
+const chosenArmor = ref({ name: 'Unarmored', ac: 0, default: true });
 
 const toggleSidebar = () => {
   sidebarHidden.value = !sidebarHidden.value;
@@ -16,6 +24,7 @@ const widgets = reactive([
   {name: 'enemies', active: true, displayName: "Enemies"},
   ])
 
+
 const stats = reactive([
   {name: 'str', value: 10},
   {name: 'dex', value: 10},
@@ -25,10 +34,7 @@ const stats = reactive([
   {name: 'cha', value: 10},
 ])
 
-const statsLocked = ref(false);
-
 const toggleStatsLocked = () => {
-  console.log("clicky", statsLocked.value)
   statsLocked.value = !statsLocked.value;
 }
 
@@ -65,6 +71,31 @@ const modifier = {
   19: 4,
   20: 5,
 }
+
+const findModifier = (statName) => {
+  const statValue = statName && stats.find(stat => stat.name === statName).value;
+  return modifier[statValue];
+}
+
+const hp = computed(() => BASE_HP + LEVEL * (HIT_DIE + findModifier('con')));
+
+const ac = computed(() => chosenArmor.value.ac === 0
+  ? BASE_AC + findModifier('dex')
+  : BASE_AC + chosenArmor.value.ac
+)
+
+const weapons = [
+  { name: 'Axe', modifier: 'str', damage: '1d6+2' },
+  { name: 'Sabre', modifier: 'dex', damage: '1d6+2' },
+  { name: 'Bow', modifier: 'dex', damage: '1d6+1' },
+ ]
+
+const armors = [
+  { name: 'Unarmored', ac: 0, default: true },
+  { name: 'Leather', ac: 1, default: false },
+  { name: 'Chain Mail', ac: 2, default: false },
+  { name: 'Plate', ac: 3, default: false },
+ ]
 </script>
 
 <template>
@@ -93,7 +124,9 @@ const modifier = {
         <table>
           <thead>
             <tr>
-              <th>Stats</th>
+              <th>
+                <h3>Stats</h3>
+              </th>
               <th v-for="stat in stats">
                 <h3>{{ stat.name.toUpperCase() }}</h3>
               </th>
@@ -111,12 +144,36 @@ const modifier = {
             <tr>
               <th>Mod</th>
               <td v-for="(stat) in stats">
-                {{ modifier[stat.value] }}
+                <b>{{ modifier[stat.value] }}</b>
               </td>
             </tr>
           </tbody>
         </table>
         
+        <div>
+          <h3>Combat</h3>
+          <div class="combat">
+            <div class="offense">
+              <h4>Weapon</h4>
+              <select v-model="chosenWeapon">
+                <option disabled value="">Please select one</option>
+                <option v-for="weapon in weapons" :value="weapon">{{ weapon.name }}</option>
+              </select>
+              <div>
+                <div>Mod: {{ findModifier(chosenWeapon.modifier) }}</div>
+                <div>Dmg: {{ chosenWeapon.damage }}</div>
+              </div>
+            </div>
+            <div class="defense">
+              <h4>Defense</h4>
+              <select v-model="chosenArmor">
+                <option v-for="armor in armors" :value="armor">{{ armor.name }}</option>
+              </select>
+              <div>HP: {{ hp }}</div>
+              <div>AC: {{ ac }}</div>
+            </div>
+          </div>
+        </div>
       </template> 
     </Widget>
 
@@ -192,5 +249,18 @@ h1 {
 
 .statsModifier:disabled {
   cursor: default;
+}
+
+.combat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: end;
+}
+
+.offense,
+.defense {
+  display: flex;
+  flex-direction: column;
 }
 </style>
