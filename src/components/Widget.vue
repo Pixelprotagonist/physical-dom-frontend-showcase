@@ -3,7 +3,7 @@
 
 <template>
   <div class="widget">
-    <slot name="header">        
+    <slot name="header">
         <h2>This is my widget headline</h2>
     </slot>
     <slot  name="body">
@@ -16,14 +16,15 @@
 
 <style scoped>
 .widget {
-    margin: 10px 0;
-    border: none;
-    border-radius: 25px;
-    background-color: bisque;
-    padding: 10px 0;
-    color: black;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  grid-column: span 4;
+  margin: 10px 0;
+  border: none;
+  border-radius: 25px;
+  background-color: bisque;
+  padding: 10px 0;
+  color: black;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 </style>

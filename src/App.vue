@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 
 import Sidebar from './components/Sidebar.vue';
 import Widget from './components/Widget.vue';
@@ -30,25 +30,27 @@ const widgets = reactive([
 
     <Sidebar :sidebarHidden="sidebarHidden" @closeSidebar="toggleSidebar" :widgets="widgets" />
 
-    <CharacterWidget v-if="widgets[0].active" />
+    <div class="content">
+      <CharacterWidget v-if="widgets[0].active" />
 
-    <Widget v-if="widgets[1].active">
-      <template #header>
-        <h3>{{widgets[1].displayName}}</h3>
-      </template>
-      <template #body>
-        Some more fun will be here soon!
-      </template> 
-    </Widget>
+      <Widget v-if="widgets[1].active">
+        <template #header>
+          <h3>{{widgets[1].displayName}}</h3>
+        </template>
+        <template #body>
+          Some more fun will be here soon!
+        </template>
+      </Widget>
 
-    <Widget v-if="widgets[2].active">
-      <template #header>
-        {{widgets[2].displayName}}
-      </template>
-      <template #body>
-        Even more fun will be here soon!
-      </template> 
-    </Widget>
+      <Widget v-if="widgets[2].active">
+        <template #header>
+          {{widgets[2].displayName}}
+        </template>
+        <template #body>
+          Even more fun will be here soon!
+        </template>
+      </Widget>
+    </div>
 
   </div>
 </template>
@@ -81,5 +83,11 @@ h1 {
   flex-direction: column;
   align-items: start;
   justify-content: space-between;
+}
+
+.content {
+  margin: 0 5%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 </style>

@@ -126,7 +126,7 @@ const armors = [
           </tr>
         </tbody>
       </table>
-      
+
       <div>
         <h3>Combat</h3>
         <div class="combat">
@@ -151,7 +151,7 @@ const armors = [
           </div>
         </div>
       </div>
-    </template> 
+    </template>
   </Widget>
 </template>
 
@@ -180,15 +180,22 @@ const armors = [
 }
 
 .combat {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: end;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px;
 }
 
 .offense,
 .defense {
+  grid-column: span 2;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.offense > h4,
+.defense > h4{
+  margin: 5px 0;
 }
 </style>
