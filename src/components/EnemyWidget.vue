@@ -52,42 +52,42 @@ const dealDamage = () => {
 </script>
 
 <template>
-  <Widget>
+  <Widget class="enemyWidget">
     <template #header>
       <div>
-        <h2>Enemies</h2>
+        <h2>Enemy</h2>
       </div>
     </template>
 
     <template #body>
       <div class="enemies">
-        <label for="crPicker" class="crPicker">Choose CR</label>
+        <label for="crPicker" class="crPickerLabel">Choose CR</label>
         <input v-model="cr" type="number" class="crPicker" name="crPicker" />
         <button @click="findEnemy" class="battleButton" :disabled="monster && !isDead">Into Battle!</button>
         <div v-if="loadingMonster" class="loader" />
         <div v-else-if="monster !== null" class="monster">
-          <h3 class="monsterPropertyFull">{{ monster.name }}</h3>
-          <p v-if="isDead" class="monsterPropertyFull">
+          <p v-if="isDead" class="deathDescription">
             You have slain the enemy! Do you dare to find another foe?
           </p>
+          <h3 class="monsterName">{{ monster.name }}</h3>
           <div class="hp" >
           </div>
-          <div class="monsterPropertyFull">
+          <div class="hpValue">
             HP: {{ `${currentHp}/${monster.hit_points}` }}
           </div>
-          <div :class="['monsterPropertyTiny', 'acWrapper']">
+          <div class="acWrapper">
             <div>
               <b>AC</b>
             </div>
             <div class="ac">{{ monster.armor_class[0].value }}</div>
           </div>
-          <div class="monsterPropertySmall">
+          <div class="damage">
             <label for="damage">Attack for how much?</label>
             <input v-model="damage" type="number" min="0" name="damage" class="damageInput" />
           </div>
-          <button @click="dealDamage()" :class="['gridButton', 'monsterPropertySmall', 'monsterProperty']" :disabled="currentHp < 1">Attack!</button>
-          <h3 :class="['monsterPropertyFull', 'monsterPropertyHeading']">Enemy Actions</h3>
-          <div v-for="action in monster.actions" :class="['monsterPropertyFull', 'action']">
+          <button @click="dealDamage()" class="damageButton" :disabled="currentHp < 1">Attack!</button>
+          <h3 class="monsterPropertyHeading">Enemy Actions</h3>
+          <div v-for="action in monster.actions" class="action">
             <h4 class="actionName">{{ action.name }}</h4>
             <p class="actionDescription">{{ action.desc }}</p>
           </div>
@@ -99,11 +99,19 @@ const dealDamage = () => {
 </template>
 
 <style scoped>
+.enemyWidget {
+  grid-column: span 4;
+}
+
 .enemies {
   margin: 0 5px;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 5px;
+}
+
+.crPickerLabel {
+  grid-column: 1 / 3;
 }
 
 .crPicker {
@@ -126,28 +134,18 @@ const dealDamage = () => {
   align-self: center;
 }
 
-.monsterPropertyFull {
-  grid-column: span 5;
-}
-
-.monsterPropertySmall {
-  grid-column: span 2;
-}
-
-.monsterPropertyBig {
-  grid-column: span 3;
-}
-
-.monsterPropertyTiny {
-  grid-column: span 1;
-}
-
 .monsterPropertyHeading {
+  grid-column: span 5;
   margin: 10px 0 0 0;
 }
 
-.gridButton {
-  height: 50px;
+.deathDescription {
+  grid-column: span 5;
+  margin: 0;
+}
+
+.monsterName {
+  grid-column: span 5;
 }
 
 .hp {
@@ -169,7 +167,12 @@ const dealDamage = () => {
   transition: all 0.5s ease;
 }
 
+.hpValue {
+  grid-column: span 5;
+}
+
 .acWrapper {
+  grid-column: span 1;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -184,11 +187,23 @@ const dealDamage = () => {
   background-position: center;
 }
 
+.damage {
+  grid-column: span 2;
+  align-self: center;
+}
+
 .damageInput {
   width: 80%;
 }
 
+.damageButton {
+  grid-column: span 2;
+  align-self: center;
+  height: 50px;
+}
+
 .action {
+  grid-column: span 5;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
@@ -201,6 +216,7 @@ const dealDamage = () => {
 
 .actionName {
   margin: 0 0 5px 0;
+  text-decoration: underline;
 }
 
 .loader {
@@ -216,5 +232,56 @@ const dealDamage = () => {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media screen and (min-width: 800px) {
+  .crPickerLabel {
+    grid-column: 1;
+    align-self: center;
+  }
+  .crPicker {
+    grid-column: 2;
+    align-self: center;
+  }
+
+  .battleButton {
+    grid-column: 4 / 6;
+  }
+
+  .deathDescription {
+    grid-column: span 5;
+    margin: 10px 0;
+  }
+
+  .monsterName {
+    grid-column: 1 / 2;
+  }
+
+  .hp {
+    grid-column: span 4;
+    align-self: center;
+  }
+
+  .hpValue {
+    grid-column: span 1;
+    align-self: center;
+  }
+
+  .acWrapper {
+    grid-column: span 1;
+  }
+
+  .ac {
+    padding: 5% 0;
+  }
+
+  .damage {
+    grid-column: span 2;
+    align-self: center;
+  }
+
+  .damageButton {
+    grid-column: span 1;
+  }
 }
 </style>

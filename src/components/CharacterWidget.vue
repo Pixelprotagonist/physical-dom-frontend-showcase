@@ -87,18 +87,18 @@ const armors = [
 </script>
 
 <template>
-  <Widget>
+  <Widget class="characterWidget">
     <template #header>
       <div class="statsHeader">
         <h2>Character</h2>
         <button @click="toggleStatsLocked" class="statsLock">Lock</button>
-        <img v-if="statsLocked" src="/src/assets/locked.png" alt="Stats Locked" class="statsStatusIcon" />
-        <img v-else src="/src/assets/unlocked.png" alt="Stats Unlocked" class="statsStatusIcon" />
+        <img v-if="statsLocked" @click="toggleStatsLocked" src="/src/assets/locked.png" alt="Stats Locked" class="statsStatusIcon" />
+        <img v-else @click="toggleStatsLocked" src="/src/assets/unlocked.png" alt="Stats Unlocked" class="statsStatusIcon" />
       </div>
     </template>
 
     <template #body>
-      <table>
+      <table class="stats">
         <thead>
           <tr>
             <th>
@@ -113,9 +113,11 @@ const armors = [
           <tr>
             <th>Raw</th>
             <td v-for="(stat, index) in stats">
-              <button @click="lowerStat(index)" :disabled="statsLocked" class="statsModifier">-</button>
-              <b>{{ stat.value }}</b>
-              <button @click="higherStat(index)" :disabled="statsLocked" class="statsModifier">+</button>
+              <div class="stat">
+                <button @click="higherStat(index)" :disabled="statsLocked" class="statsModifier">+</button>
+                <b>{{ stat.value }}</b>
+                <button @click="lowerStat(index)" :disabled="statsLocked" class="statsModifier">-</button>
+              </div>
             </td>
           </tr>
           <tr>
@@ -132,7 +134,7 @@ const armors = [
         <div class="combat">
           <div class="offense">
             <h4>Weapon</h4>
-            <select v-model="chosenWeapon">
+            <select v-model="chosenWeapon" class="characterSelect">
               <option disabled value="">Please select one</option>
               <option v-for="weapon in weapons" :value="weapon">{{ weapon.name }}</option>
             </select>
@@ -143,7 +145,7 @@ const armors = [
           </div>
           <div class="defense">
             <h4>Defense</h4>
-            <select v-model="chosenArmor">
+            <select v-model="chosenArmor" class="characterSelect">
               <option v-for="armor in armors" :value="armor">{{ armor.name }}</option>
             </select>
             <div>HP: {{ hp }}</div>
@@ -156,6 +158,10 @@ const armors = [
 </template>
 
 <style scoped>
+.characterWidget {
+  grid-column: span 4;
+}
+
 .statsHeader {
   display: flex;
   flex-direction: row;
@@ -171,7 +177,20 @@ const armors = [
   width: 20px;
 }
 
+.stats {
+  margin: 0 5px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 .statsModifier {
+  padding: 0.2em 0.4em;
   cursor: pointer;
 }
 
@@ -183,6 +202,10 @@ const armors = [
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 5px;
+}
+
+.characterSelect {
+  width: 80%;
 }
 
 .offense,
@@ -197,5 +220,29 @@ const armors = [
 .offense > h4,
 .defense > h4{
   margin: 5px 0;
+}
+
+@media screen and (min-width: 540px) {
+  .statsModifier {
+    padding: 0.2em 1em;
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .characterWidget {
+    grid-column: span 3;
+  }
+
+  .characterSelect {
+    min-width: 150px;
+  }
+
+  .offense,
+  .defense {
+    margin-left: 10px;
+    align-items: start;
+    text-align: left;
+  }
 }
 </style>

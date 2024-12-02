@@ -16,11 +16,10 @@
 
 <style scoped>
 .widget {
-  grid-column: span 4;
   margin: 10px 0;
-  border: none;
-  border-radius: 25px;
-  background-color: bisque;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: transparent;
   padding: 10px 0;
   color: black;
   width: 100%;

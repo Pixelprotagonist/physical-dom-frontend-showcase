@@ -40,7 +40,7 @@ const rollFastDie = async (index, sides) => {
 </script>
 
 <template>
-  <Widget>
+  <Widget class="diceWidget">
     <template #header>
       <h2>Roll some dice!</h2>
     </template>
@@ -56,6 +56,10 @@ const rollFastDie = async (index, sides) => {
 </template>
 
 <style scoped>
+.diceWidget {
+  grid-column: span 4;
+}
+
 .fastDice {
   margin: 0 10px;
   width: auto;
@@ -80,19 +84,19 @@ const rollFastDie = async (index, sides) => {
 }
 
 .d6 {
-  background-image: url('/src/assets/d6.png');
+  background-image: url('/src/assets/d6_beige.png');
 }
 
 .d8 {
-  background-image: url('/src/assets/d8.png');
+  background-image: url('/src/assets/d8_beige.png');
 }
 
 .d12 {
-  background-image: url('/src/assets/d12.png');
+  background-image: url('/src/assets/d12_beige.png');
 }
 
 .d20 {
-  background-image: url('/src/assets/d20.png');
+  background-image: url('/src/assets/d20_beige.png');
 }
 
 .rolling {
@@ -106,5 +110,28 @@ const rollFastDie = async (index, sides) => {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@media screen and (min-width: 800px) {
+  .diceWidget {
+    grid-column: span 1;
+  }
+
+  .fastDice {
+    height: 100%;
+    flex-direction: column;
+  }
+
+  .fastDie {
+    min-height: 50px;
+    min-width: 50px;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

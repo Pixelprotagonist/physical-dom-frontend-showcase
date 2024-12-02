@@ -16,16 +16,15 @@ const toggleWidget = (index) => {
   <Transition name="sidebar">
     <div class="sidebar" v-if="props.sidebarHidden">
       <button @click="closeSidebar" class="visibilityButton">Hide</button>
-      <div v-for="(widget, index) in props.widgets" class="widgetToggle" @click="toggleWidget(index)">
+      <button v-for="(widget, index) in props.widgets" class="widgetToggle" @click="toggleWidget(index)">
         {{ widget.displayName }}
         <Transition name="widgetStatus">
           <img v-if="widget.active" src="/src/assets/check.png" class="statusIcon" />
           <img v-else src="/src/assets/cross.png" class="statusIcon" />
         </Transition>
-      </div>
+      </button>
     </div>
   </Transition>
-
 </template>
 
 <style scoped>
@@ -49,11 +48,9 @@ const toggleWidget = (index) => {
 }
 
 .widgetToggle {
-  margin: 10%;
-  border: 1px solid black;
-  border-radius: 5px;
+  margin: 10px;
   padding: 10px 0 10px 10px;
-  width: 80%;
+  width: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -73,7 +70,7 @@ const toggleWidget = (index) => {
 }
 
 .sidebar-enter-from,
-.sidebar-leave-to {  
+.sidebar-leave-to {
   transform: translateX(-100%);
 }
 
@@ -81,9 +78,14 @@ const toggleWidget = (index) => {
   transform: translateX(-30px);
   opacity: 0;
 }
-.widgetStatus-leave-to {  
+.widgetStatus-leave-to {
   transform: translateX(30px);
   opacity: 0;
-  
+}
+
+@media screen and (min-width: 800px) {
+  .sidebar {
+    width: 20%;
+  }
 }
 </style>
