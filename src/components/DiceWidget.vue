@@ -15,11 +15,11 @@ const dieClasses = (sides) => {
   const { rolling, result } = fastDice.value.find((die) => die.sides === sides);
   const dieBaseClasses = ['fastDie', `d${sides}`]
   if (rolling) {
-    return [...dieBaseClasses, 'rolling']
+    return [...dieBaseClasses, 'rolling'];
   } else if (result === 1) {
-    return [...dieBaseClasses, 'criticalFailure']
+    return [...dieBaseClasses, 'criticalFailure'];
   } else {
-    return dieBaseClasses
+    return dieBaseClasses;
   }
 }
 
@@ -32,7 +32,6 @@ const rollDie = (faces) => {
 }
 
 const rollFastDie = async (index, sides) => {
-  // const index = fastDice.value.findIndex((die) => die.sides === sides);
   fastDice.value[index].rolling = true;
   await delay(1000);
   fastDice.value[index].result = rollDie(sides);
