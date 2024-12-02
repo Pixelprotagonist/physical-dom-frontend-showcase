@@ -43,6 +43,14 @@ const widgets = reactive([
 </template>
 
 <style scoped>
+.root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+}
+
 .sidebarButton {
   position: fixed;
   top: 10px;
@@ -64,17 +72,11 @@ h1 {
   margin-top: 0;
 }
 
-.root {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: space-between;
-}
-
 .content {
   margin: 0 5%;
+  width: 90%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  column-gap: 10px;
 }
 </style>
