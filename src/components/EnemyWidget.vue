@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, ref } from 'vue';
 import axios from 'axios';
 
 import Widget from './Widget.vue';
@@ -64,24 +64,30 @@ const dealDamage = () => {
 
     <template #body>
       <div class="enemies">
-        <input v-model="cr" type="number" class="crPicker" />
+        <label for="crPicker" class="crPicker">Choose CR</label>
+        <input v-model="cr" type="number" class="crPicker" name="crPicker" />
         <button @click="findEnemy" class="battleButton" :disabled="monster && !isDead">Into Battle!</button>
         <div v-if="loadingMonster" class="loader" />
         <div v-else-if="monster !== null" class="monster">
           <h3 class="monsterPropertyFull">{{ monster.name }}</h3>
-          <div class="hp" :style="{'--hpBarLeft': '35%'}" >
+          <p v-if="isDead" class="monsterPropertyFull">
+            You have slain the enemy! Do you dare to find another foe?
+          </p>
+          <div class="hp" >
           </div>
           <div class="monsterPropertyFull">
             HP: {{ `${currentHp}/${monster.hit_points}` }}
           </div>
-          <p v-if="isDead" class="monsterPropertyFull">
-            You have slain the enemy! Do you dare to find another foe?
-          </p>
-          <input v-model="damage" type="number" min="0"/>
-          <button @click="dealDamage()" class="monsterPropertySmall" :disabled="currentHp < 1">Attack!</button>
+          <div :class="['monsterPropertyTiny', 'acWrapper']">
+            <div>AC</div>
+            <div class="ac">{{ monster.armor_class[0].value }}</div>
+          </div>
+          <div class="monsterPropertySmall">
+            <label for="damage">Attack for how much?</label>
+            <input v-model="damage" type="number" min="0" name="damage" class="damageInput" />
+          </div>
+          <button @click="dealDamage()" :class="['gridButton', 'monsterPropertySmall', 'monsterProperty']" :disabled="currentHp < 1">Attack!</button>
         </div>
-        <!-- <pre class="monster">{{ monster ? monster : "Find a worthy foe!" }}</pre> -->
-
       </div>
 
     </template>
@@ -108,6 +114,12 @@ const dealDamage = () => {
   grid-column: span 5;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  row-gap: 10px;
+}
+
+.monsterProperty {
+  justify-self: stretch;
+  align-self: center;
 }
 
 .monsterPropertyFull {
@@ -120,6 +132,14 @@ const dealDamage = () => {
 
 .monsterPropertyBig {
   grid-column: span 3;
+}
+
+.monsterPropertyTiny {
+  grid-column: span 1;
+}
+
+.gridButton {
+  height: 50px;
 }
 
 .hp {
@@ -139,6 +159,25 @@ const dealDamage = () => {
   content: "";
   z-index: 2;
   transition: all 0.5s ease;
+}
+
+.acWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.ac {
+  padding: 15% 0;
+  background-image: url('/src/assets/shield.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.damageInput {
+  width: 80%;
 }
 
 .loader {

@@ -15,16 +15,14 @@ const toggleWidget = (index) => {
 <template>
   <Transition name="sidebar">
     <div class="sidebar" v-if="props.sidebarHidden">
-      <button @click="closeSidebar" class="visibilityButton">Hide Sidebar</button>
+      <button @click="closeSidebar" class="visibilityButton">Hide</button>
       <div v-for="(widget, index) in props.widgets" class="widgetToggle" @click="toggleWidget(index)">
         {{ widget.displayName }}
         <Transition name="widgetStatus">
           <img v-if="widget.active" src="/src/assets/check.png" class="statusIcon" />
           <img v-else src="/src/assets/cross.png" class="statusIcon" />
         </Transition>
-
       </div>
-      
     </div>
   </Transition>
 
@@ -32,7 +30,7 @@ const toggleWidget = (index) => {
 
 <style scoped>
 .sidebar {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   height: 100%;
@@ -43,6 +41,7 @@ const toggleWidget = (index) => {
   justify-content: flex-start;
   background-color: beige;
   color: black;
+  z-index: 3;
 }
 
 .visibilityButton {

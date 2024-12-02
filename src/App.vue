@@ -21,7 +21,7 @@ const widgets = reactive([
 
 <template>
   <div class="root">
-    <button class="sidebarButton" @click="toggleSidebar">Sidebar</button>
+    <button class="sidebarButton" @click="toggleSidebar">Options</button>
     <div class="pageHeader">
       <img src="/src/assets/DnD-Logo.png" class="icon">
       <h1>
@@ -43,7 +43,7 @@ const widgets = reactive([
         </template>
       </Widget>
 
-      <EnemyWidget />
+      <EnemyWidget v-if="widgets[2].active" />
     </div>
 
   </div>
@@ -51,7 +51,7 @@ const widgets = reactive([
 
 <style scoped>
 .sidebarButton {
-  position: absolute;
+  position: fixed;
   top: 10px;
   left: 10px;
 }
