@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import axios from 'axios';
 
 import Widget from './Widget.vue';
+import { getRandomInt } from '../helpers/helpers'
 
 const API_BASE_URL = 'https://www.dnd5eapi.co/api'
 
@@ -15,10 +16,6 @@ const currentHpPercent = ref();
 const damage = ref(1);
 
 const isDead = computed(() => monster.value !== null && currentHp.value < 1);
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
 
 const getMonsters = async () => {
   monsters.value = await axios.get(`${API_BASE_URL}/monsters`,
