@@ -79,7 +79,9 @@ const dealDamage = () => {
             HP: {{ `${currentHp}/${monster.hit_points}` }}
           </div>
           <div :class="['monsterPropertyTiny', 'acWrapper']">
-            <div>AC</div>
+            <div>
+              <b>AC</b>
+            </div>
             <div class="ac">{{ monster.armor_class[0].value }}</div>
           </div>
           <div class="monsterPropertySmall">
@@ -87,6 +89,11 @@ const dealDamage = () => {
             <input v-model="damage" type="number" min="0" name="damage" class="damageInput" />
           </div>
           <button @click="dealDamage()" :class="['gridButton', 'monsterPropertySmall', 'monsterProperty']" :disabled="currentHp < 1">Attack!</button>
+          <h3 :class="['monsterPropertyFull', 'monsterPropertyHeading']">Enemy Actions</h3>
+          <div v-for="action in monster.actions" :class="['monsterPropertyFull', 'action']">
+            <h4 class="actionName">{{ action.name }}</h4>
+            <p class="actionDescription">{{ action.desc }}</p>
+          </div>
         </div>
       </div>
 
@@ -138,6 +145,10 @@ const dealDamage = () => {
   grid-column: span 1;
 }
 
+.monsterPropertyHeading {
+  margin: 10px 0 0 0;
+}
+
 .gridButton {
   height: 50px;
 }
@@ -178,6 +189,21 @@ const dealDamage = () => {
 
 .damageInput {
   width: 80%;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+}
+
+.actionDescription {
+  margin: 0;
+}
+
+.actionName {
+  margin-bottom: 5px;
 }
 
 .loader {
