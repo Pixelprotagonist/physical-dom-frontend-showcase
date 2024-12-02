@@ -203,7 +203,7 @@ const dealDamage = () => {
 }
 
 .actionName {
-  margin-bottom: 5px;
+  margin: 0 0 5px 0;
 }
 
 .loader {
