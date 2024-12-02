@@ -2,9 +2,9 @@
 import { reactive, ref } from 'vue';
 
 import Sidebar from './components/Sidebar.vue';
-import Widget from './components/Widget.vue';
 import CharacterWidget from './components/CharacterWidget.vue';
 import EnemyWidget from './components/EnemyWidget.vue';
+import DiceWidget from './components/DiceWidget.vue';
 
 const sidebarHidden = ref(false);
 
@@ -34,14 +34,7 @@ const widgets = reactive([
     <div class="content">
       <CharacterWidget v-if="widgets[0].active" />
 
-      <Widget v-if="widgets[1].active">
-        <template #header>
-          <h3>{{widgets[1].displayName}}</h3>
-        </template>
-        <template #body>
-          Some more fun will be here soon!
-        </template>
-      </Widget>
+      <DiceWidget v-if="widgets[1].active" />
 
       <EnemyWidget v-if="widgets[2].active" />
     </div>
