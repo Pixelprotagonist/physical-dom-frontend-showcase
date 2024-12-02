@@ -4,6 +4,7 @@ import { computed, ref } from 'vue';
 import { getRandomInt } from '../helpers/helpers'
 import Widget from './Widget.vue';
 
+// to add dice, add them here, add a fitting background image to assets and add a class for the background
 const fastDice = ref([
   {sides: 6, rolling: false, result: 6},
   {sides: 8, rolling: false, result: 8},
