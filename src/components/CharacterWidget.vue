@@ -3,6 +3,7 @@ import { computed, reactive, ref } from 'vue';
 
 import Widget from './Widget.vue';
 
+// If fleshed out into a more complex project, these stats could come from a DB
 const LEVEL = 3;
 const BASE_HP = 10;
 const HIT_DIE = 8;
@@ -42,6 +43,7 @@ const higherStat = (index) => {
   }
 }
 
+// Lookup object to not run a computation on every stat change
 const modifier = {
   6: -2,
   7: -2,

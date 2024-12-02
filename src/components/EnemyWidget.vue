@@ -44,6 +44,7 @@ const findEnemy = async () => {
     });
 }
 
+// for now damage is just entered manually, later an attack could be rolled depending on character widget
 const dealDamage = () => {
   currentHp.value = currentHp.value - damage.value;
   currentHpPercent.value = `${Math.floor((currentHp.value/monster.value.hit_points)*100)}%`
