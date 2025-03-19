@@ -34,13 +34,13 @@ const widgets = reactive([
     <Sidebar :sidebarHidden="sidebarHidden" @closeSidebar="toggleSidebar" :widgets="widgets" />
 
     <div class="content">
-      <CharacterWidget v-if="widgets[0].active" />
+      <CharacterWidget v-show="widgets[0].active" />
 
-      <DiceWidget v-if="widgets[1].active" />
+      <DiceWidget v-show="widgets[1].active" />
 
-      <EnemyWidget v-if="widgets[2].active" />
+      <EnemyWidget v-show="widgets[2].active" />
 
-      <PrintessWidget v-if="widgets[3].active" />
+      <PrintessWidget v-show="widgets[3].active" />
     </div>
 
   </div>
