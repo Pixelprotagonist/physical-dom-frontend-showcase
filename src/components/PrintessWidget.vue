@@ -1,6 +1,22 @@
 <script setup>
 
+import axios from 'axios';
 import Widget from './Widget.vue';
+
+const BACKEND_URL = 'http://localhost:3000/api'
+
+const print = (printessToken) => {
+  axios({
+    method: 'get',
+    url: `${BACKEND_URL}/print`,
+    params: {
+      token: printessToken
+    }
+  })
+  .then(res => {
+    window.open(res.data, "_blank");
+  });
+}
 
 
 function loadPrintess() {
@@ -15,7 +31,8 @@ function loadPrintess() {
           alert("Back to catalog. save-token:" + event.data.token);
           break;
         case "basket":
-          prompt("Proceed to checkout.\n\nsave-token:\n" + event.data.token +  "\n\nThumbnailUrl:",event.data.thumbnailUrl );
+          print(event.data.token);
+          // prompt("Proceed to checkout.\n\nsave-token:\n" + event.data.token +  "\n\nThumbnailUrl:",event.data.thumbnailUrl );
           break;
       }
     });
