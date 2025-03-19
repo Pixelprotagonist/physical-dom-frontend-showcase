@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar.vue';
 import CharacterWidget from './components/CharacterWidget.vue';
 import EnemyWidget from './components/EnemyWidget.vue';
 import DiceWidget from './components/DiceWidget.vue';
+import PrintessWidget from './components/PrintessWidget.vue';
 
 const sidebarHidden = ref(false);
 
@@ -13,9 +14,10 @@ const toggleSidebar = () => {
 }
 
 const widgets = reactive([
-  {name: 'character', active: true, displayName: "Character"},
-  {name: 'dice', active: true, displayName: "Dice Tray"},
-  {name: 'enemies', active: true, displayName: "Enemies"},
+  {name: 'character', active: true, displayName: 'Character'},
+  {name: 'dice', active: true, displayName: 'Dice Tray'},
+  {name: 'enemies', active: true, displayName: 'Enemies'},
+  {name: 'printess', active: true, displayName: 'Printess'},
   ])
 </script>
 
@@ -37,6 +39,8 @@ const widgets = reactive([
       <DiceWidget v-if="widgets[1].active" />
 
       <EnemyWidget v-if="widgets[2].active" />
+
+      <PrintessWidget v-if="widgets[3].active" />
     </div>
 
   </div>
