@@ -17,7 +17,7 @@ const widgets = reactive([
   {name: 'character', active: true, displayName: 'Character'},
   {name: 'dice', active: true, displayName: 'Dice Tray'},
   {name: 'enemies', active: true, displayName: 'Enemies'},
-  {name: 'printess', active: true, displayName: 'Printess'},
+  {name: 'printess', active: false, displayName: 'Printess'},
   ])
 </script>
 
