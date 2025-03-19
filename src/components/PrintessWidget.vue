@@ -1,43 +1,48 @@
 <script setup>
-import { computed, ref } from 'vue';
 
-import { getRandomInt } from '../helpers/helpers'
 import Widget from './Widget.vue';
 
-// to add dice, add them here, add a fitting background image to assets and add a class for the background
-const fastDice = ref([
-  {sides: 6, rolling: false, result: 6},
-  {sides: 8, rolling: false, result: 8},
-  {sides: 12, rolling: false, result: 12},
-  {sides: 20, rolling: false, result: 20},
-])
 
-const dieClasses = (sides) => {
-  const { rolling, result } = fastDice.value.find((die) => die.sides === sides);
-  const dieBaseClasses = ['fastDie', `d${sides}`]
-  if (rolling) {
-    return [...dieBaseClasses, 'rolling'];
-  } else if (result === 1) {
-    return [...dieBaseClasses, 'criticalFailure'];
-  } else {
-    return dieBaseClasses;
+function loadPrintess() {
+    const iframe = document.getElementById("printess");
+
+    /* **************************** */
+    /* listen to printess callbacks */
+    /* **************************** */
+    window.addEventListener("message", () => {
+      switch (event.data.cmd) {
+        case "back":
+          alert("Back to catalog. save-token:" + event.data.token);
+          break;
+        case "basket":
+          prompt("Proceed to checkout.\n\nsave-token:\n" + event.data.token +  "\n\nThumbnailUrl:",event.data.thumbnailUrl );
+          break;
+      }
+    });
+
+    /* *************************** */
+    /*    load Printess editor     */
+    /* *************************** */
+    iframe.contentWindow.postMessage({
+      cmd: "attach", properties: {
+           "templateName": "DnD_Character",
+           "templateVersion": "published",
+           "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6InByaW50ZXNzLXNhYXMtYWxwaGEiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiIwNDU5Yjc5NjA2ODI0ZmIyOWJhNDY0MmY1YzBiMDg0MSIsImp0aSI6Ind3ZDlBVTRoZVJTbE5pNGFyV0Mwd3Z1U0FLYlJCNVFSIiwicm9sZSI6InNob3AiLCJuYmYiOjE3NDIzNzg3NTksImV4cCI6MjA1NzczODc1OSwiaWF0IjoxNzQyMzc4NzU5LCJpc3MiOiJQcmludGVzcyBHbWJIICYgQ28uS0ciLCJhdWQiOiJwcmludGVzcy1zYWFzIn0.q_qUfxDbdGayQITJZLv-tOjxzHROpZEWHtVwkbWljabSmHmQdxwr6fKsXHCBtQGj2tqk0LIYXx4s-SGPufucfS250H_DJkJrrp48bPaNojcgUoJtAq1N7pdt5zprdAgUeq6t8z3dblQfMKIOjH8FqHdm-zg-eArNTLLl4pbjr32CNNahGNFoqLYMuxyeaqeasf6tLudBV4j-KcDjAa4C2TGitViAr9SCb2I7-qY062hYbXUHLIFqAqGc2PDM2VgcD9b4ieMIHRJ0QHfU_CSqKp-Ys4Pjotci2CMMd2yYejoVbpPqpkCVCw8LgT4wY6JQh5K8RByN7pIerhWjc7hPFNAaqqYuoLaO8m1hIO94cAxRy1p9u4UqBdFsbk38DqQMkBNXALyR20cCqgq7oDgOd5y-VuSn9kMaDL4LnFhLabjK4_lXDfkZdiF8XDJa3D4X2rGFCOIRuy6-gldjr9Bbcvhzd0i11WWkrxGAeDGsN-lWMVXqd910fpzg1YivP8DKCeYCO6RLWR9JspI56kOswY4q5_PpfBCDXPVKG_r_GoWUuG2KQsW79_ZCm17R1ELin-IcPyCoIszrjuscLxZlTuX5QE7-NJ9AzlAvUla8zOM8twmcu1QEuxp3fIlMrrQLSWrgjMwacgmBs9GzS2u1HzX6NkPmr_CiVzmbXTOtAsc"
+       }
+    }, "*");
   }
-}
 
-function delay(time) {
-  return new Promise(resolve => setTimeout(resolve, time));
-}
+  /* *************************** */
+  /*   Forward Visual Viewport   */
+  /* *************************** */
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("scroll", () => {
+      // unfortunately an iframe on iOS is not able to receive the correct visual-viewport, so we forward it.
+      iframe.contentWindow.postMessage({ cmd: "viewportScroll", height: window.visualViewport.height, offsetTop: window.visualViewport.offsetTop },"*");
+    })
+  }
 
-const rollDie = (faces) => {
-  return getRandomInt(faces, 1);
-}
 
-const rollFastDie = async (index, sides) => {
-  fastDice.value[index].rolling = true;
-  await delay(1000);
-  fastDice.value[index].result = rollDie(sides);
-  fastDice.value[index].rolling = false;
-}
 </script>
 
 <template>
@@ -48,7 +53,9 @@ const rollFastDie = async (index, sides) => {
 
     <template #body>
       <div>
-        Printess Integraion coming soon!
+        <!-- <button :class="printessButton" @click="togglePrintess">Toggle Printess</button> -->
+        <!-- v-show="displayPrintess" -->
+        <iframe  id="printess" src="//editor.printess.com/printess-editor/embed.html" @load="loadPrintess()"></iframe>
       </div>
     </template>
   </Widget>
@@ -58,4 +65,29 @@ const rollFastDie = async (index, sides) => {
 .printessWidget {
   grid-column: span 4;
 }
+
+.printessButton {
+  z-index: 9001;
+}
+
+html {
+      height: -webkit-fill-available; /* Counter act the Safari viewport-height bug */
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      height: -webkit-fill-available;
+    }
+
+    iframe {
+      width: 80vw;
+      height: 100%;
+      border: none;
+      display: block;
+      position: fixed;
+      left: 20%;
+      top: 0;
+    }
 </style>
