@@ -6,7 +6,6 @@ import Widget from './Widget.vue';
 const BACKEND_URL = 'http://localhost:3000/api'
 
 const print = (printessToken) => {
-  console.log(printessToken);
   axios({
     method: 'get',
     url: `${BACKEND_URL}/print`,
@@ -15,7 +14,6 @@ const print = (printessToken) => {
     }
   })
   .then(res => {
-    console.log(res)
     window.open(res.data, "_blank");
   });
 }
