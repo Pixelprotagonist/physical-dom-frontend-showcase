@@ -182,6 +182,8 @@ const armors = [
 
 .stats {
   margin: 0 5px;
+  border-collapse:separate;
+  border-spacing: 0 30px;
 }
 
 .stat {
@@ -189,7 +191,6 @@ const armors = [
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .statsModifier {
