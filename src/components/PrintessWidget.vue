@@ -55,8 +55,8 @@ function loadPrintess() {
           value: "Human Fighter"
         },
         {
-          name: "group",
-          value: '{ _1: "Level 3" }'
+          name: "Level",
+          value: '3'
         }
       ]
     }
@@ -80,7 +80,7 @@ function loadPrintess() {
 <template>
   <Widget class="printessWidget">
     <template #header>
-      <h2>Design Something</h2>
+      <h2>Leave an impression!</h2>
     </template>
 
     <template #body>
@@ -105,19 +105,13 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  /* height: 100vh;
-  height: -webkit-fill-available; */
 }
 
 iframe {
   width: 100%;
-  /* width: 80vw; */
   height: 500px;
   border: none;
   display: block;
-  /* position: fixed; */
-  /* left: 20%; */
-  /* top: 0; */
 }
 
 #printess-desktop-grid {
