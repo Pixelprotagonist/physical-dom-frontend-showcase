@@ -13,6 +13,7 @@ const statsLocked = ref(false);
 const chosenWeapon = ref('');
 const chosenArmor = ref({ name: 'Unarmored', ac: 0, default: true });
 
+const characterName = ref("Maxim Alerschaden");
 
 const stats = reactive([
   {name: 'str', value: 10},
@@ -92,7 +93,7 @@ const armors = [
   <Widget class="characterWidget">
     <template #header>
       <div class="statsHeader">
-        <h2>Character</h2>
+        <h2>{{ characterName }}</h2>
         <button @click="toggleStatsLocked" class="statsLock">Lock</button>
         <img v-if="statsLocked" @click="toggleStatsLocked" src="/src/assets/locked.png" alt="Stats Locked" class="statsStatusIcon" />
         <img v-else @click="toggleStatsLocked" src="/src/assets/unlocked.png" alt="Stats Unlocked" class="statsStatusIcon" />
