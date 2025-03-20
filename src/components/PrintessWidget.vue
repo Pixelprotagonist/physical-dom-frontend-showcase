@@ -108,10 +108,11 @@ body {
 }
 
 iframe {
-  width: 100%;
+  width: 98%;
   height: 500px;
   border: none;
   display: block;
+  padding: 0 1%;
 }
 
 #printess-desktop-grid {
