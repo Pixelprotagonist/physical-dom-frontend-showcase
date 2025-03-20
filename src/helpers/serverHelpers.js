@@ -44,8 +44,6 @@ async function sendToProduction(token, templateNameOrSaveToken) {
 }
 
 export async function producePdf(token, templateNameOrSaveToken) {
-  console.log('we arrive');
-  console.log(token, templateNameOrSaveToken)
   const produceResponse = await sendToProduction(token, templateNameOrSaveToken);
 
   if (!produceResponse.ok) {
@@ -71,7 +69,6 @@ export async function producePdf(token, templateNameOrSaveToken) {
 
   if (status.isSuccess) {
     const pdfs = Object.keys(status.result.r).map(key => ({ document: key, url: status.result.r[key] }));
-    console.log("###", pdfs[0].url)
 
     return pdfs[0].url;
 
