@@ -62,20 +62,6 @@ function loadPrintess() {
     }
   }, "*");
 
-  iframe.contentWindow.formFields = [
-    {
-      name: "Name",
-      value: "Maxim Alerschaden"
-    },
-    {
-      name: "Title",
-      value: "Human Fighter"
-    },
-    {
-      name: "group",
-      value: '{ _1: "Level 3" }'
-    }
-  ]
 }
 
   /* *************************** */
